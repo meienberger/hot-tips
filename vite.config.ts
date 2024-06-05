@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { directoryPlugin } from 'vite-plugin-list-directory-contents';
+import tailwindcss from '@vituum/vite-plugin-tailwindcss';
 /* eslint-disable */
 // import { directoryPlugin } from '../../../Sites/vite-plugin-list-directory-contents/plugin';
 import { exec } from 'node:child_process';
@@ -23,19 +24,20 @@ async function run(cmd: string, waitForText?: string) {
 type FileWithStats = {
   file: string;
   stats: Awaited<ReturnType<typeof stat>>;
-}
+};
 
 async function getLastModifiedFile(fileGlob: string) {
   const files: string[] = await fg([fileGlob, '!**/node_modules/**']);
   const stats = await Promise.all(files.map((file) => stat(file)));
-  const filesWithStats: FileWithStats[] = files.map((file, index) => ({ file, stats: stats[index] })).sort((a, b) => b.stats.mtimeMs - a.stats.mtimeMs);
+  const filesWithStats: FileWithStats[] = files
+    .map((file, index) => ({ file, stats: stats[index] }))
+    .sort((a, b) => b.stats.mtimeMs - a.stats.mtimeMs);
   return filesWithStats.at(0);
 }
 
 process.env.BROWSER = 'Firefox Developer Edition';
 
 export default defineConfig(async () => {
-
   const [lastFile] = await Promise.all([
     getLastModifiedFile('**/*.html'),
     run('caddy stop').then(() => run('caddy start', 'Caddy is running')),
@@ -48,6 +50,7 @@ export default defineConfig(async () => {
       open: `https://tips.localhost/${lastFile?.file}`,
     },
     plugins: [
+      tailwindcss(),
       directoryPlugin({
         baseDir: __dirname,
       }),

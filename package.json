@@ -45,6 +45,10 @@
     "vite-plugin-list-directory-contents": "^1.4.5"
   },
   "devDependencies": {
-    "@types/node": "^18.11.18"
+    "@types/node": "^18.11.18",
+    "@vituum/vite-plugin-tailwindcss": "^1.1.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3"
   }
 }

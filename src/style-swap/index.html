@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Style Swap</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+  <body>
+    <div class="container bg-red-900 w-full">
+      <h1 class="text-3xl text-black font-extrabold text-red-600">Style Swap</h1>
+      <button class="button">Swap</button>
+    </div>
+    <script>
+      const button = document.querySelector(`.swap`);
+      const link = document.querySelector(`link`);
+      button.addEventListener(`click`, () => {
+        console.log(`Swapping`);
+        if (link.getAttribute(`href`) === `1.css`) {
+          link.setAttribute(`href`, `2.css`);
+        } else {
+          link.setAttribute(`href`, `1.css`);
+        }
+      });
+    </script>
+  </body>
+</html>
